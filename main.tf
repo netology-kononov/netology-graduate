@@ -1,23 +1,27 @@
 provider "yandex" {
-  cloud_id  = "b1g33rnkdgjohcdl2ks7"
-  folder_id = "b1gjk81mhc94gj788sq9"
+  cloud_id  = "${var.yandex_cloud_id}"
+  folder_id = "${var.yandex_folder_id}"
   zone      = "ru-central1-a"
 }
 
-resource "yandex_vpc_network" "vpc_net" {
+resource "yandex_vpc_network" "vpc-net" {
   name = "netology-graduate-net"
 }
 
-resource "yandex_vpc_subnet" "vpc_subnet-a" {
-  name           = "zone-a-subnet"
+resource "yandex_vpc_subnet" "vpc-extra-subnet-a" {
+  name           = "zone-a-extra-subnet"
   zone           = "ru-central1-a"
-  network_id     = "${yandex_vpc_network.vpc_net.id}"
+  network_id     = "${yandex_vpc_network.vpc-net.id}"
+  v4_cidr_blocks = ["192.168.100.0/24"]
+}
+
+resource "yandex_vpc_subnet" "vpc-intra-subnet-a" {
+  name           = "zone-a-intra-subnet"
+  zone           = "ru-central1-a"
+  network_id     = "${yandex_vpc_network.vpc-net.id}"
   v4_cidr_blocks = ["192.168.1.0/24"]
 }
 
-resource "yandex_vpc_subnet" "vpc_subnet-b" {
-  name           = "zone-b-subnet"
-  zone           = "ru-central1-b"
-  network_id     = "${yandex_vpc_network.vpc_net.id}"
-  v4_cidr_blocks = ["192.168.2.0/24"]
+data "yandex_compute_image" "ubuntu-2004" {
+  family = "ubuntu-2004-lts"
 }
