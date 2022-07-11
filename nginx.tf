@@ -21,11 +21,11 @@ resource "yandex_compute_instance" "nginx-01" {
   network_interface {
     subnet_id  = "${yandex_vpc_subnet.vpc-extra-subnet-a.id}"
     nat        = true
-    ip_address = "192.168.100.100"
+#    ip_address = "192.168.100.100"
   }
 
-  network_interface {
-    subnet_id  = "${yandex_vpc_subnet.vpc-intra-subnet-a.id}"
-    ip_address = "192.168.1.100"
-  }
+#  network_interface {
+#    subnet_id  = "${yandex_vpc_subnet.vpc-intra-subnet-a.id}"
+#    ip_address = "192.168.1.100"
+#  }
 }
