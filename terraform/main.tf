@@ -15,13 +15,6 @@ resource "yandex_vpc_subnet" "vpc-subnet-a" {
   v4_cidr_blocks = ["192.168.1.0/24"]
 }
 
-#resource "yandex_vpc_subnet" "vpc-subnet-b" {
-#  name           = "zone-a-subnet"
-#  zone           = "ru-central1-b"
-#  network_id     = "${yandex_vpc_network.vpc-net.id}"
-#  v4_cidr_blocks = ["192.168.2.0/24"]
-#}
-
 data "yandex_compute_image" "ubuntu-2004" {
   family = "ubuntu-2004-lts"
 }

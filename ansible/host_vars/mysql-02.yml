@@ -1,0 +1,5 @@
+---
+#MySQL server Slave
+role: "mysql_slave"
+server_id: "2"
+config_add_line: "read_only = 1"

@@ -1,0 +1,19 @@
+---
+# defaults file for roles/netology_wordpress
+wp_db_name: "wordpress"
+wp_db_user: "wordpress"
+wp_db_passwd: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          34343239633632333139633231663433363833666435363138633032323065363635623332663032
+          6430633966343631636236386235303930373839386231310a623066623032653032363036336338
+          65363832373565353237313231373834303831633464626630336634613063623835373133366330
+          3931376364643537630a643433306162643463643663343033623666316462663862343738313538
+          6239
+wp_auth_key: "netology_was_here"
+wp_sec_auth_key: "netology_was_here"
+wp_logged_in_key: "netology_was_here"
+wp_nonce_key: "netology_was_here"
+wp_auth_salt: "netology_was_here"
+wp_sec_auth_salt: "netology_was_here"
+wp_logged_in_salt: "netology_was_here"
+wp_nonce_salt: "netology_was_here"

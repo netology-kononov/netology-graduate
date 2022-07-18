@@ -1,0 +1,52 @@
+---
+# tasks file for roles/netology_mysql
+- name: MySQL | Install Packages
+  become: true
+  ansible.builtin.apt:
+    update_cache: yes
+    name: "{{ item }}"
+    state: present
+  with_items: "{{ mysql_packages }}"
+  environment: "{{ proxy_env }}"
+- name: MySQL | Upload config
+  become: true
+  ansible.builtin.template:
+    src: mysqld.cnf.j2
+    dest: /etc/mysql/mysql.conf.d/mysqld.cnf
+    mode: 0644
+  notify: MySQL | Restart MySQL
+- name: MySQL | Apply config Now
+  ansible.builtin.meta: flush_handlers
+- name: MySQL | Check if WordPress Database already exists
+  become: true
+  ansible.builtin.shell: |
+    mysql -uroot -e "SHOW DATABASES;"
+  register: result
+  changed_when: false
+- name: MySQL | Create User for the Replication service
+  become: true
+  ansible.builtin.shell: |
+    mysql -uroot -e "CREATE USER '{{ replication_user }}'@'%' IDENTIFIED BY '{{ replication_user_passwd }}';"
+    mysql -uroot -e "GRANT REPLICATION SLAVE on *.* to '{{ replication_user }}'@'%';"
+  when: (role == "mysql_master") and not ("wordpress" in result.stdout_lines)
+- name: MySQL | Pause before modify Slave server
+  ansible.builtin.pause:
+    seconds: "{{ commands_timeout }}"
+- name: MySQL | Connect Slave server to Master server
+  become: true
+  ansible.builtin.shell: |
+    mysql -uroot -e "STOP SLAVE;"
+    mysql -uroot -e "CHANGE MASTER TO MASTER_HOST='{{ hostvars['mysql-01']['ansible_default_ipv4']['address'] }}', MASTER_USER='{{ replication_user }}', MASTER_PASSWORD='{{ replication_user_passwd }}';"
+    mysql -uroot -e "CHANGE MASTER TO GET_MASTER_PUBLIC_KEY=1;"
+    mysql -uroot -e "START SLAVE;"
+  when: (role == "mysql_slave") and not ("wordpress" in result.stdout_lines)
+- name: MySQL | Pause after modify Slave server
+  ansible.builtin.pause:
+    seconds: "{{ commands_timeout }}"
+- name: MySQL | Create Database and User for WordPress
+  become: true
+  ansible.builtin.shell: |
+    mysql -uroot -e "CREATE DATABASE {{ wordpress_db }};"
+    mysql -uroot -e "CREATE USER '{{ wordpress_user }}'@'{{ hostvars['wordpress-01']['ansible_default_ipv4']['address'] }}' IDENTIFIED BY '{{ wordpress_user_passwd }}';"
+    mysql -uroot -e "GRANT ALL PRIVILEGES ON {{ wordpress_db }}.* TO '{{ wordpress_user }}'@'{{ hostvars['wordpress-01']['ansible_default_ipv4']['address'] }}';"
+  when: (role == "mysql_master") and not ("wordpress" in result.stdout_lines)

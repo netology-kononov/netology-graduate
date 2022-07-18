@@ -1,0 +1,66 @@
+{{ ssl_certificate }}
+{{ ssl_certificate_key }}
+
+server {
+	listen 80;
+	{{ ssl_listen }}
+	server_name www.netology-stud.run.place;
+	location / {
+		proxy_pass http://192.168.1.10:80;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+	}
+}
+server {
+	listen 80;
+	{{ ssl_listen }}
+	server_name gitlab.netology-stud.run.place;
+	location / {
+		proxy_pass http://192.168.1.20:80;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+	}
+}
+
+server {
+	listen 80;
+	{{ ssl_listen }}
+	server_name grafana.netology-stud.run.place;
+	location / {
+		proxy_pass http://192.168.1.30:80;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+	}
+}
+
+server {
+	listen 80;
+	{{ ssl_listen }}
+	server_name prometheus.netology-stud.run.place;
+	location / {
+		proxy_pass http://192.168.1.40:80;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+	}
+}
+
+server {
+	listen 80;
+	{{ ssl_listen }}
+	server_name alertmanager.netology-stud.run.place;
+	location / {
+		proxy_pass http://192.168.1.50:80;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+	}
+}

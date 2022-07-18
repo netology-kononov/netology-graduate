@@ -1,0 +1,59 @@
+---
+# tasks file for roles/netology_nginx
+- name: NGINX | Install Packages
+  become: true
+  ansible.builtin.apt:
+    update_cache: yes
+    name: "{{ item }}"
+    state: present
+  with_items: "{{ nginx_packages }}"
+- name: NGINX | Check if SSL certificate key exists
+  become: true
+  stat:
+    path: "/etc/ssl/private/letsencrypt-domain.key"
+  register: result
+- name: NGINX | Upload config
+  become: true
+  ansible.builtin.template:
+    src: nginx.default.j2
+    dest: /etc/nginx/sites-available/default
+    mode: 0644
+  notify: NGINX | Restart NGINX
+  when: not result.stat.exists
+- name: NGINX | Flush handler Restart NGINX
+  ansible.builtin.meta: flush_handlers
+- name: NGINX | Register DNS
+  ansible.builtin.command: curl https://api.dnsexit.com/dns/ud/?apikey={{ dnsexit_api }} -d host={{ item }}
+  with_items: "{{ ssl_sites }}"
+  changed_when: false
+- name: NGINX | Install ACME-NGINX
+  become: true
+  ansible.builtin.pip:
+    name: acme-nginx
+    executable: pip3
+  notify: NGINX | Get SSL certificates
+- name: NGINX | Pause after ACME-NGINX installation
+  ansible.builtin.pause:
+    seconds: 30
+  when: not result.stat.exists
+- name: NGINX | Flush handler Get SSL certificate
+  ansible.builtin.meta: flush_handlers
+- name: NGINX | Set NGINX_SSL config variables
+  ansible.builtin.set_fact:
+    ssl_certificate: "ssl_certificate /etc/ssl/private/letsencrypt-domain.pem;"
+    ssl_certificate_key: "ssl_certificate_key /etc/ssl/private/letsencrypt-domain.key;"
+    ssl_listen: "listen 443 ssl;"
+- name: NGINX | Upload SSL config
+  become: true
+  ansible.builtin.template:
+    src: nginx.default.j2
+    dest: /etc/nginx/sites-available/default
+    mode: 0644
+  notify: NGINX | Restart NGINX
+- name: NGINX | Config Tinyproxy
+  become: true
+  ansible.builtin.template:
+    src: tinyproxy.conf.j2
+    dest: /etc/tinyproxy/tinyproxy.conf
+    mode: 0644
+  notify: NGINX | Restart Tinyproxy

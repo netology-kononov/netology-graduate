@@ -1,0 +1,36 @@
+---
+# tasks file for roles/netology_wordpress
+- name: WordPress | Install Packages
+  become: true
+  ansible.builtin.apt:
+    update_cache: yes
+    name: "{{ item }}"
+    state: present
+  with_items: "{{ wordpress_packages }}"
+  environment: "{{ proxy_env }}"
+- name: WordPress | Download WordPress
+  ansible.builtin.get_url:
+    url: https://wordpress.org/latest.tar.gz
+    dest: /tmp/latest.tar.gz
+  environment: "{{ proxy_env }}"
+- name: WordPress | Unarchive WordPress
+  become: true
+  ansible.builtin.unarchive:
+    src: /tmp/latest.tar.gz
+    dest: /var/www/
+    creates: /var/www/wordpress/
+    remote_src: yes
+- name: WordPress | Upload WordPress config
+  become: true
+  ansible.builtin.template:
+    src: wp-config.php.j2
+    dest: /var/www/wordpress/wp-config.php
+    mode: 0644
+  notify: WordPress | Restart PHP
+- name: WordPress | Upload NGINX config
+  become: true
+  ansible.builtin.template:
+    src: nginx.default.j2
+    dest: /etc/nginx/sites-available/default
+    mode: 0644
+  notify: WordPress | Restart NGINX

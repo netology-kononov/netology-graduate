@@ -1,0 +1,7 @@
+---
+# vars file for roles/netology_gitlab
+gitlab_packages:
+  - ca-certificates
+  - curl
+  - openssh-server
+  - tzdata

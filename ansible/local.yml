@@ -1,0 +1,16 @@
+---
+- name: Test
+  hosts: gitlab
+  tasks:
+#    - name: Get IP
+#      ansible.builtin.debug: var=ansible_default_ipv4.address
+    - name: Print
+      ansible.builtin.debug:
+        msg: "{{ ansible_default_ipv4.address }}"
+      when: role == "gitlab_runner"
+    - name: Print 2
+      ansible.builtin.debug:
+        msg: "{{ hostvars['gitlab-01']['ansible_default_ipv4']['address'] }}"
+    - name: Print 3
+      ansible.builtin.debug:
+        msg: "{{ hostvars['gitlab-01']['ansible_hostname'] }}"

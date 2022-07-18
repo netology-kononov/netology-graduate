@@ -1,0 +1,4 @@
+---
+# vars file for roles/netology_mysql
+mysql_packages:
+  - mysql-server

@@ -1,0 +1,19 @@
+---
+#- name: Install NGINX
+#  hosts: nginx
+#  roles:
+#    - netology_nginx
+- name: Get facts
+  hosts: proxified
+- name: Install MySQL
+  hosts: mysql
+  roles:
+    - netology_mysql
+- name: Install WordPress
+  hosts: app
+  roles:
+    - netology_wordpress
+- name: Install GitLab
+  hosts: gitlab
+  roles:
+    - netology_gitlab

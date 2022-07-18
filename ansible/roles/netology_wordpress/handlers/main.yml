@@ -1,0 +1,12 @@
+---
+# handlers file for roles/netology_wordpress
+- name: WordPress | Restart NGINX
+  become: true
+  ansible.builtin.service:
+    name: nginx
+    state: restarted
+- name: WordPress | Restart PHP
+  become: true
+  ansible.builtin.service:
+    name: php7.4-fpm
+    state: restarted

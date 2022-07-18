@@ -1,0 +1,7 @@
+---
+## Cloud site: ######################
+#ansible_user: ubuntu
+
+## Local site: ######################
+ansible_user: vagrant
+ansible_password: vagrant

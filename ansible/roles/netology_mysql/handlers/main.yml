@@ -1,0 +1,7 @@
+---
+# handlers file for roles/netology_mysql
+- name: MySQL | Restart MySQL
+  become: true
+  ansible.builtin.service:
+    name: mysql
+    state: restarted

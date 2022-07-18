@@ -1,0 +1,20 @@
+---
+# handlers file for roles/netology_nginx
+- name: NGINX | Restart NGINX
+  become: true
+  ansible.builtin.service:
+    name: nginx
+    state: restarted
+- name: NGINX | Restart Tinyproxy
+  become: true
+  ansible.builtin.service:
+    name: tinyproxy
+    state: restarted
+- name: NGINX | Get SSL certificates
+  become: true
+  ansible.builtin.command: acme-nginx --staging \
+                          -d www.netology-stud.run.place \
+                          -d gitlab.netology-stud.run.place \
+                          -d grafana.netology-stud.run.place \
+                          -d prometheus.netology-stud.run.place \
+                          -d alertmanager.netology-stud.run.place

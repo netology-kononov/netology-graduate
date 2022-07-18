@@ -1,0 +1,17 @@
+[mysqld]
+user			= mysql
+pid-file		= /var/run/mysqld/mysqld.pid
+socket			= /var/run/mysqld/mysqld.sock
+datadir			= /var/lib/mysql
+key_buffer_size         = 16M
+myisam-recover-options  = BACKUP
+log_error		= /var/log/mysql/error.log
+log_bin			= /var/log/mysql/mysql-bin.log
+binlog_format		= ROW
+max_binlog_size		= 800M
+sync_binlog		= 1
+expire-logs-days	= 5
+tmpdir			= /tmp
+server-id		= {{ server_id }}
+slow_query_log		= {{ server_id }}
+{{ config_add_line }}

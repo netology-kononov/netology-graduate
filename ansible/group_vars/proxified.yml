@@ -1,0 +1,11 @@
+---
+## Cloud site: ######################
+#ansible_ssh_common_args: '-o ProxyCommand="ssh -o StrictHostKeyChecking=no -W %h:%p -q ubuntu@netology-stud.run.place"'
+#proxy_env:
+#  https_proxy: "http://192.168.1.100:8888"
+#  http_proxy: "http://192.168.1.100:8888"
+
+## Local site: ######################
+proxy_env:
+  https_proxy: ""
+  http_proxy: ""

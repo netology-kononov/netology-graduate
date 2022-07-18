@@ -1,0 +1,3 @@
+---
+#GitLab server
+role: "gitlab_server"

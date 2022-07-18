@@ -1,0 +1,53 @@
+---
+all:
+  children:
+    proxified:
+      hosts:
+        mysql-01:
+        mysql-02:
+        wordpress-01:
+        gitlab-01:
+        gitlab-02:
+## Cloud site: ######################
+#    nginx:
+#      hosts:
+#        nginx-01:
+#          ansible_host: 62.84.112.25
+#    mysql:
+#      hosts:
+#        mysql-01:
+#          ansible_host: 192.168.1.11
+#        mysql-02:
+#          ansible_host: 192.168.1.12
+#    app:
+#      hosts:
+#        wordpress-01:
+#          ansible_host: 192.168.1.10
+#    gitlab:
+#      hosts:
+#        gitlab-01:
+#          ansible_host: 192.168.1.20
+#        gitlab-02:
+#          ansible_host: 192.168.1.21
+
+## Local site: ######################
+#    nginx:
+#      hosts:
+#        nginx-01:
+#          ansible_host: 192.168.3.19
+    mysql:
+      hosts:
+        mysql-01:
+          ansible_host: 192.168.3.22
+        mysql-02:
+          ansible_host: 192.168.3.19
+    app:
+      hosts:
+        wordpress-01:
+          ansible_host: 192.168.3.19
+    gitlab:
+      hosts:
+        gitlab-01:
+          ansible_host: 192.168.3.20
+        gitlab-02:
+          ansible_host: 192.168.3.21
