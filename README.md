@@ -10,6 +10,7 @@ https://github.com/netology-kononov/netology-graduate/tree/main/ansible
 (Вся чувствительная информация зашифрована с помощью ansible-vault, пароль передан преподавателю в личном кабинете)  
 
 3. Скриншоты веб-интерфейсов всех сервисов работающих по HTTPS на вашем доменном имени.  
+---  
 - https://www.netology-stud.run.place (WordPress)  
 ![WordPress](img/WordPress.png)  
 - https://gitlab.netology-stud.run.place (Gitlab)  
