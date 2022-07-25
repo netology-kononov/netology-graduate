@@ -2,58 +2,7 @@
 # tasks file for roles/netology_gitlab
 - name: Check service facts
   ansible.builtin.service_facts:
-- name: GitLab | Install Packages
-  become: true
-  ansible.builtin.apt:
-    update_cache: yes
-    name: "{{ item }}"
-    state: present
-  with_items: "{{ gitlab_packages }}"
-  environment: "{{ proxy_env }}"
-  when: (role == "gitlab_server") and not ("gitlab-runsvdir.service" in ansible_facts.services)
-- name: GitLab | Download installation prepare Script
-  ansible.builtin.get_url:
-    url: https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.deb.sh
-    dest: /tmp/script.deb.sh
-    mode: 0777
-  environment: "{{ proxy_env }}"
-  when: (role == "gitlab_server") and not ("gitlab-runsvdir.service" in ansible_facts.services)
-- name: GitLab | Run installation prepare Script
-  become: true
-  ansible.builtin.shell:
-    cmd: /tmp/script.deb.sh
-  environment: "{{ proxy_env }}"
-  when: (role == "gitlab_server") and not ("gitlab-runsvdir.service" in ansible_facts.services)
-- name: GitLab | Install GitLab-CE
-  become: true
-  ansible.builtin.shell: >
-     EXTERNAL_URL="{{ gitlab_url }}"
-     GITLAB_ROOT_PASSWORD="{{ gitlab_root_pwd }}"
-     GITLAB_SHARED_RUNNERS_REGISTRATION_TOKEN="{{ gitlab_token }}"
-     apt-get install gitlab-ce
-  environment: "{{ proxy_env }}"
-  when: (role == "gitlab_server") and not ("gitlab-runsvdir.service" in ansible_facts.services)
-- name: GitLab | Download Runner .deb package
-  ansible.builtin.get_url:
-    url: https://gitlab-runner-downloads.s3.amazonaws.com/latest/deb/gitlab-runner_amd64.deb
-    dest: /tmp/gitlab-runner_amd64.deb
-    mode: 0644
-  environment: "{{ proxy_env }}"
-  when: (role == "gitlab_runner") and not ("gitlab-runner.service" in ansible_facts.services)
-- name: GitLab | Install Runner .deb package
-  become: true
-  ansible.builtin.apt:
-    update_cache: yes
-    deb: /tmp/gitlab-runner_amd64.deb
-  environment: "{{ proxy_env }}"
-  when: (role == "gitlab_runner") and not ("gitlab-runner.service" in ansible_facts.services)
-- name: GitLab | Register Runner
-  become: true
-  ansible.builtin.shell: >
-    gitlab-runner register
-    --non-interactive
-    --url "{{ gitlab_url }}"
-    --registration-token "{{ gitlab_token }}"
-    --description "{{ hostvars['gitlab-02']['ansible_hostname'] }}-{{ runner_executor }}-Runner"
-    --executor "{{ runner_executor }}"
-  when: (role == "gitlab_runner") and not ("gitlab-runner.service" in ansible_facts.services)
+- ansible.builtin.include_tasks: setup_gitlab_server.yml
+  when: (role_gitlab == "server") and not ("gitlab-runsvdir.service" in ansible_facts.services)
+- ansible.builtin.include_tasks: setup_gitlab_runner.yml
+  when: (role_gitlab == "runner") and not ("gitlab-runner.service" in ansible_facts.services)

@@ -1,0 +1,34 @@
+---
+- name: Prom | Download Prometheus archive
+  become: true
+  ansible.builtin.unarchive:
+    src: https://github.com/prometheus/prometheus/releases/download/v{{ prom_ver }}/prometheus-{{ prom_ver }}.linux-amd64.tar.gz
+    dest: /var/lib/
+    creates: /var/lib/prometheus/
+    owner: "{{ prom_owner }}"
+    extra_opts:
+      - --transform
+      - s/prometheus-{{ prom_ver }}.linux-amd64/prometheus/
+    remote_src: yes
+  environment: "{{ proxy_env }}"
+- name: Prom | Upload Prometheus unit-file
+  become: true
+  ansible.builtin.template:
+    src: prometheus.service.j2
+    dest: /etc/systemd/system/prometheus.service
+    mode: 0644
+  notify: Prom | Restart Prometheus
+- name: Prom | Upload Prometheus config
+  become: true
+  ansible.builtin.template:
+    src: prometheus.yml.j2
+    dest: /etc/prometheus.yml
+    mode: 0644
+  notify: Prom | Restart Prometheus
+- name: Prom | Upload Alerts rules
+  become: true
+  ansible.builtin.copy:
+    src: files/alert_rules/
+    dest: /var/lib/prometheus/alert_rules/
+    mode: 0644
+  notify: Prom | Restart Prometheus

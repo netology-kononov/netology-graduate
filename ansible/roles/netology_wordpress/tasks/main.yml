@@ -9,17 +9,13 @@
   with_items: "{{ wordpress_packages }}"
   environment: "{{ proxy_env }}"
 - name: WordPress | Download WordPress
-  ansible.builtin.get_url:
-    url: https://wordpress.org/latest.tar.gz
-    dest: /tmp/latest.tar.gz
-  environment: "{{ proxy_env }}"
-- name: WordPress | Unarchive WordPress
   become: true
   ansible.builtin.unarchive:
-    src: /tmp/latest.tar.gz
+    src: https://wordpress.org/latest.tar.gz
     dest: /var/www/
     creates: /var/www/wordpress/
     remote_src: yes
+  environment: "{{ proxy_env }}"
 - name: WordPress | Upload WordPress config
   become: true
   ansible.builtin.template:

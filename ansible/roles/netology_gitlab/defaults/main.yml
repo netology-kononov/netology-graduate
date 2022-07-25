@@ -1,6 +1,6 @@
 ---
 # defaults file for roles/netology_gitlab
-role: "gitlab_runner"
+role_gitlab: "runner"
 runner_executor: "shell"
 gitlab_url: "http://{{ hostvars['gitlab-01']['ansible_default_ipv4']['address'] }}"
 gitlab_root_pwd: !vault |

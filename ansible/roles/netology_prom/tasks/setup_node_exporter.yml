@@ -1,0 +1,20 @@
+---
+- name: Prom | Download Node exporter archive
+  become: true
+  ansible.builtin.unarchive:
+    src: https://github.com/prometheus/node_exporter/releases/download/v{{ node_ver }}/node_exporter-{{ node_ver }}.linux-amd64.tar.gz
+    dest: /var/lib/
+    creates: /var/lib/node_exporter/
+    owner: "{{ prom_owner }}"
+    extra_opts:
+      - --transform
+      - s/node_exporter-{{ node_ver }}.linux-amd64/node_exporter/
+    remote_src: yes
+  environment: "{{ proxy_env }}"
+- name: Prom | Upload Node exporter unit-file
+  become: true
+  ansible.builtin.template:
+    src: node_exporter.service.j2
+    dest: /etc/systemd/system/node_exporter.service
+    mode: 0644
+  notify: Prom | Restart Node exporter

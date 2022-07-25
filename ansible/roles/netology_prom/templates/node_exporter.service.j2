@@ -1,0 +1,18 @@
+[Unit]
+Description=Prometheus Node Exporter
+Documentation=https://github.com/prometheus/node_exporter
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+User={{ prom_owner }}
+Group={{ prom_owner_group }}
+ExecStart=/var/lib/node_exporter/node_exporter \
+  --web.listen-address=:{{ node_port }}
+
+SyslogIdentifier=node_exporter
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

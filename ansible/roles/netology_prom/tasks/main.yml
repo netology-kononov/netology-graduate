@@ -1,0 +1,11 @@
+---
+# tasks file for roles/netology_prom
+- ansible.builtin.include_tasks: setup_node_exporter.yml
+- ansible.builtin.include_tasks: setup_mysqld_exporter.yml
+  when: (role_prom == "mysql")
+- ansible.builtin.include_tasks: setup_prometheus.yml
+  when: (role_prom == "server")
+- ansible.builtin.include_tasks: setup_alert_manager.yml
+  when: (role_prom == "server")
+- ansible.builtin.include_tasks: setup_grafana.yml
+  when: (role_prom == "server")

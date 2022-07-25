@@ -29,3 +29,7 @@ variable "gitlab_01_private_ip" {
 variable "gitlab_02_private_ip" {
   default = "192.168.1.21"
 }
+
+variable "prom_01_private_ip" {
+  default = "192.168.1.30"
+}

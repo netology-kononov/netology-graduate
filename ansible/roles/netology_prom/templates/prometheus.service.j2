@@ -1,0 +1,21 @@
+[Unit]
+Description=Prometheus
+Documentation=https://prometheus.io/docs/introduction/overview/
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+User={{ prom_owner }}
+Group={{ prom_owner_group }}
+ExecReload=/bin/kill -HUP \$MAINPID
+ExecStart=/var/lib/prometheus/prometheus \
+  --web.listen-address=:{{ prom_port }} \
+  --config.file=/etc/prometheus.yml \
+  --storage.tsdb.path=/var/lib/prometheus/data/
+
+SyslogIdentifier=prometheus
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

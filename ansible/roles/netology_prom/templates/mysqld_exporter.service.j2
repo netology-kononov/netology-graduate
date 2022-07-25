@@ -1,0 +1,19 @@
+[Unit]
+Description=Prometheus MySQLd Exporter
+Documentation=https://github.com/prometheus/mysqld_exporter
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+User={{ prom_owner }}
+Group={{ prom_owner_group }}
+ExecStart=/var/lib/mysqld_exporter/mysqld_exporter \
+  --web.listen-address=:{{ mysqld_port }} \
+  --config.my-cnf="/etc/mysql/.my.cnf"
+
+SyslogIdentifier=mysqld_exporter
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

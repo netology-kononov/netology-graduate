@@ -1,0 +1,6 @@
+---
+# vars file for roles/netology_prom
+grafana_packages:
+  - apt-transport-https
+  - software-properties-common
+  - grafana-enterprise

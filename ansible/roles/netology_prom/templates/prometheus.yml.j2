@@ -1,0 +1,67 @@
+# my global config
+global:
+  scrape_interval: 15s # Set the scrape interval to every 15 seconds. Default is every 1 minute.
+  evaluation_interval: 15s # Evaluate rules every 15 seconds. The default is every 1 minute.
+  # scrape_timeout is set to the global default (10s).
+
+# Alertmanager configuration
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+          - {{ hostvars['prom-01']['ansible_default_ipv4']['address'] }}:{{ alerter_port }}
+
+# Load rules once and periodically evaluate them according to the global 'evaluation_interval'.
+rule_files:
+  - "/var/lib/prometheus/alert_rules/*.yml"
+
+scrape_configs:
+  - job_name: "prometheus"
+    static_configs:
+      - targets:
+        - localhost:{{ prom_port }}
+
+  - job_name: "node_prom-01"
+    static_configs:
+      - targets:
+        - localhost:{{ node_port }}
+
+  - job_name: "node_gitlab-01"
+    static_configs:
+      - targets:
+        - {{ hostvars['gitlab-01']['ansible_default_ipv4']['address'] }}:{{ node_port }}
+
+  - job_name: "node_gitlab-02"
+    static_configs:
+      - targets:
+        - {{ hostvars['gitlab-02']['ansible_default_ipv4']['address'] }}:{{ node_port }}
+
+  - job_name: "node_mysql-01"
+    static_configs:
+      - targets:
+        - {{ hostvars['mysql-01']['ansible_default_ipv4']['address'] }}:{{ node_port }}
+
+  - job_name: "mysqld_mysql-01"
+    static_configs:
+      - targets:
+        - {{ hostvars['mysql-01']['ansible_default_ipv4']['address'] }}:{{ mysqld_port }}
+
+  - job_name: "node_mysql-02"
+    static_configs:
+      - targets:
+        - {{ hostvars['mysql-02']['ansible_default_ipv4']['address'] }}:{{ node_port }}
+
+  - job_name: "mysqld_mysql-02"
+    static_configs:
+      - targets:
+        - {{ hostvars['mysql-02']['ansible_default_ipv4']['address'] }}:{{ mysqld_port }}
+
+  - job_name: "node_wordpress-01"
+    static_configs:
+      - targets:
+        - {{ hostvars['wordpress-01']['ansible_default_ipv4']['address'] }}:{{ node_port }}
+
+  - job_name: "node_nginx-01"
+    static_configs:
+      - targets:
+        - {{ hostvars['nginx-01']['ansible_default_ipv4']['address'] }}:{{ node_port }}

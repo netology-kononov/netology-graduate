@@ -1,4 +1,4 @@
 ---
-#GitLab runner
-role: "gitlab_runner"
+# GitLab runner
+role_gitlab: "runner"
 runner_executor: "shell"

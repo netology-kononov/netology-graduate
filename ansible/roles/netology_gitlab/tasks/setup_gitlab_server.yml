@@ -1,0 +1,28 @@
+---
+- name: GitLab | Install Packages
+  become: true
+  ansible.builtin.apt:
+    update_cache: yes
+    name: "{{ item }}"
+    state: present
+  with_items: "{{ gitlab_packages }}"
+  environment: "{{ proxy_env }}"
+- name: GitLab | Download installation prepare Script
+  ansible.builtin.get_url:
+    url: https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.deb.sh
+    dest: /tmp/script.deb.sh
+    mode: 0777
+  environment: "{{ proxy_env }}"
+- name: GitLab | Run installation prepare Script
+  become: true
+  ansible.builtin.shell:
+    cmd: /tmp/script.deb.sh
+  environment: "{{ proxy_env }}"
+- name: GitLab | Install GitLab-CE
+  become: true
+  ansible.builtin.shell: >
+     EXTERNAL_URL="{{ gitlab_url }}"
+     GITLAB_ROOT_PASSWORD="{{ gitlab_root_pwd }}"
+     GITLAB_SHARED_RUNNERS_REGISTRATION_TOKEN="{{ gitlab_token }}"
+     apt-get install gitlab-ce
+  environment: "{{ proxy_env }}"

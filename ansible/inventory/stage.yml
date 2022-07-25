@@ -8,46 +8,55 @@ all:
         wordpress-01:
         gitlab-01:
         gitlab-02:
+        prom-01:
 ## Cloud site: ######################
-#    nginx:
-#      hosts:
-#        nginx-01:
-#          ansible_host: 62.84.112.25
-#    mysql:
-#      hosts:
-#        mysql-01:
-#          ansible_host: 192.168.1.11
-#        mysql-02:
-#          ansible_host: 192.168.1.12
-#    app:
-#      hosts:
-#        wordpress-01:
-#          ansible_host: 192.168.1.10
-#    gitlab:
-#      hosts:
-#        gitlab-01:
-#          ansible_host: 192.168.1.20
-#        gitlab-02:
-#          ansible_host: 192.168.1.21
+    nginx:
+      hosts:
+        nginx-01:
+          ansible_host: 51.250.3.203
+    mysql:
+      hosts:
+        mysql-01:
+          ansible_host: 192.168.1.11
+        mysql-02:
+          ansible_host: 192.168.1.12
+    app:
+      hosts:
+        wordpress-01:
+          ansible_host: 192.168.1.10
+    gitlab:
+      hosts:
+        gitlab-01:
+          ansible_host: 192.168.1.20
+        gitlab-02:
+          ansible_host: 192.168.1.21
+    prom:
+      hosts:
+        prom-01:
+          ansible_host: 192.168.1.30
 
 ## Local site: ######################
 #    nginx:
 #      hosts:
 #        nginx-01:
 #          ansible_host: 192.168.3.19
-    mysql:
-      hosts:
-        mysql-01:
-          ansible_host: 192.168.3.22
-        mysql-02:
-          ansible_host: 192.168.3.19
-    app:
-      hosts:
-        wordpress-01:
-          ansible_host: 192.168.3.19
-    gitlab:
-      hosts:
-        gitlab-01:
-          ansible_host: 192.168.3.20
-        gitlab-02:
-          ansible_host: 192.168.3.21
+#    mysql:
+#      hosts:
+#        mysql-01:
+#          ansible_host: 192.168.3.22
+#        mysql-02:
+#          ansible_host: 192.168.3.19
+#    app:
+#      hosts:
+#        wordpress-01:
+#          ansible_host: 192.168.3.19
+#    gitlab:
+#      hosts:
+#        gitlab-01:
+#          ansible_host: 192.168.3.20
+#        gitlab-02:
+#          ansible_host: 192.168.3.21
+#    prom:
+#      hosts:
+#        prom-01:
+#          ansible_host: 192.168.3.19

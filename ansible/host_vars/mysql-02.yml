@@ -1,5 +1,6 @@
 ---
-#MySQL server Slave
-role: "mysql_slave"
+# MySQL server Slave
+role_mysql: "slave"
 server_id: "2"
 config_add_line: "read_only = 1"
+role_prom: "mysql"

@@ -1,3 +1,3 @@
 ---
-#GitLab server
-role: "gitlab_server"
+# GitLab server
+role_gitlab: "server"

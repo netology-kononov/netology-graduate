@@ -1,0 +1,43 @@
+---
+- name: Prom | Add Grafana apt key
+  become: true
+  ansible.builtin.apt_key:
+    url: https://packages.grafana.com/gpg.key
+    state: present
+  environment: "{{ proxy_env }}"
+- name: Prom | Upload Grafana apt sources.list config
+  become: true
+  ansible.builtin.template:
+    src: grafana.apt.souces.list.j2
+    dest: /etc/apt/sources.list.d/grafana.list
+    mode: 0644
+- name: Prom | Install Grafana packages
+  become: true
+  ansible.builtin.apt:
+    update_cache: yes
+    name: "{{ item }}"
+    state: present
+  with_items: "{{ grafana_packages }}"
+  environment: "{{ proxy_env }}"
+  notify: Prom | Restart Grafana
+- name: Prom | Upload Grafana datasources config
+  become: true
+  ansible.builtin.template:
+    src: grafana.prom_datasources.yaml.j2
+    dest: /etc/grafana/provisioning/datasources/prom_datasources.yaml
+    mode: 0644
+  notify: Prom | Restart Grafana
+- name: Prom | Upload Grafana dashboards config
+  become: true
+  ansible.builtin.template:
+    src: grafana.prom_dashboards.yaml.j2
+    dest: /etc/grafana/provisioning/dashboards/prom_dashboards.yaml
+    mode: 0644
+  notify: Prom | Restart Grafana
+- name: Prom | Upload Grafana dashboards
+  become: true
+  ansible.builtin.copy:
+    src: files/grafana_dashboards/
+    dest: /var/lib/grafana/dashboards/
+    mode: 0644
+  notify: Prom | Restart Grafana

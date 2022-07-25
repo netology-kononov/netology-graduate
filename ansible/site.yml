@@ -1,10 +1,10 @@
 ---
-#- name: Install NGINX
-#  hosts: nginx
-#  roles:
-#    - netology_nginx
+- name: Install NGINX
+  hosts: nginx
+  roles:
+    - netology_nginx
 - name: Get facts
-  hosts: proxified
+  hosts: all
 - name: Install MySQL
   hosts: mysql
   roles:
@@ -17,3 +17,7 @@
   hosts: gitlab
   roles:
     - netology_gitlab
+- name: Install Prometheos
+  hosts: all
+  roles:
+    - netology_prom

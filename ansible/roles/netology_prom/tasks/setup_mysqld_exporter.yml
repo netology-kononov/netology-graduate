@@ -1,0 +1,20 @@
+---
+- name: Prom | Download MySQLd exporter archive
+  become: true
+  ansible.builtin.unarchive:
+    src: https://github.com/prometheus/mysqld_exporter/releases/download/v{{ mysqld_ver }}/mysqld_exporter-{{ mysqld_ver }}.linux-amd64.tar.gz
+    dest: /var/lib/
+    creates: /var/lib/mysqld_exporter/
+    owner: "{{ prom_owner }}"
+    extra_opts:
+      - --transform
+      - s/mysqld_exporter-{{ mysqld_ver }}.linux-amd64/mysqld_exporter/
+    remote_src: yes
+  environment: "{{ proxy_env }}"
+- name: Prom | Upload MySQLd exporter unit-file
+  become: true
+  ansible.builtin.template:
+    src: mysqld_exporter.service.j2
+    dest: /etc/systemd/system/mysqld_exporter.service
+    mode: 0644
+  notify: Prom | Restart MySQLd exporter

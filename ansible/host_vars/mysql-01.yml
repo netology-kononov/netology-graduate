@@ -1,5 +1,6 @@
 ---
-#MySQL server Master
-role: "mysql_master"
+# MySQL server Master
+role_mysql: "master"
 server_id: "1"
 config_add_line: "slow_query_log_file	= /var/lib/mysql/mysqld-slow.log"
+role_prom: "mysql"

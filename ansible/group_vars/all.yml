@@ -1,7 +1,13 @@
 ---
+proxy_env:
+  https_proxy: ""
+  http_proxy: ""
+
 ## Cloud site: ######################
-#ansible_user: ubuntu
+ansible_user: ubuntu
+ansible_user_group: ubuntu
 
 ## Local site: ######################
-ansible_user: vagrant
-ansible_password: vagrant
+#ansible_user: vagrant
+#ansible_user_group: vagrant
+#ansible_password: vagrant
