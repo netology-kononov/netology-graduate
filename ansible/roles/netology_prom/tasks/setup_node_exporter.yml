@@ -9,7 +9,7 @@
     extra_opts:
       - --transform
       - s/node_exporter-{{ node_ver }}.linux-amd64/node_exporter/
-    remote_src: yes
+    remote_src: true
   environment: "{{ proxy_env }}"
 - name: Prom | Upload Node exporter unit-file
   become: true

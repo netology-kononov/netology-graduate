@@ -1,13 +1,13 @@
 ---
 # defaults file for roles/netology_prom
-prom_ver: "2.37.0"
-alert_ver: "0.24.0"
-node_ver: "1.3.1"
-mysqld_ver: "0.14.0"
-
+role_prom: "node"
 prom_owner: "{{ ansible_user }}"
 prom_owner_group: "{{ ansible_user_group }}"
-role_prom: "node"
+
+prom_ver: "2.37.0"
+alerter_ver: "0.24.0"
+node_ver: "1.3.1"
+mysqld_ver: "0.14.0"
 
 prom_port: "9090"
 alerter_port: "9093"

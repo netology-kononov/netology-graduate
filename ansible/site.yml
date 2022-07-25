@@ -1,8 +1,8 @@
 ---
-- name: Install NGINX
-  hosts: nginx
+- name: Configure Edge host
+  hosts: edge
   roles:
-    - netology_nginx
+    - netology_edge
 - name: Get facts
   hosts: all
 - name: Install MySQL

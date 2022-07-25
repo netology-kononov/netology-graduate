@@ -1,0 +1,10 @@
+---
+stages:
+  - deploy
+
+deploy-job:
+  stage: deploy
+  script:
+    - ssh ubuntu@192.168.1.10 "cd /var/www/wordpress/ && git pull && sudo systemctl restart nginx.service"
+  only:
+    - tags

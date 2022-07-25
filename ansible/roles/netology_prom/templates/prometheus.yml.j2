@@ -61,7 +61,7 @@ scrape_configs:
       - targets:
         - {{ hostvars['wordpress-01']['ansible_default_ipv4']['address'] }}:{{ node_port }}
 
-  - job_name: "node_nginx-01"
+  - job_name: "node_edge-01"
     static_configs:
       - targets:
-        - {{ hostvars['nginx-01']['ansible_default_ipv4']['address'] }}:{{ node_port }}
+        - {{ hostvars['edge-01']['ansible_default_ipv4']['address'] }}:{{ node_port }}

@@ -10,9 +10,9 @@ all:
         gitlab-02:
         prom-01:
 ## Cloud site: ######################
-    nginx:
+    edge:
       hosts:
-        nginx-01:
+        edge-01:
           ansible_host: 51.250.3.203
     mysql:
       hosts:
@@ -36,10 +36,10 @@ all:
           ansible_host: 192.168.1.30
 
 ## Local site: ######################
-#    nginx:
+#    edge:
 #      hosts:
-#        nginx-01:
-#          ansible_host: 192.168.3.19
+#        edge-01:
+#          ansible_host: 192.168.3.22
 #    mysql:
 #      hosts:
 #        mysql-01:

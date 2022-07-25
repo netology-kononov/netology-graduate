@@ -1,5 +1,5 @@
-resource "yandex_compute_instance" "nginx-01" {
-  name                      = "nginx-01"
+resource "yandex_compute_instance" "edge-01" {
+  name                      = "edge-01"
   zone                      = "ru-central1-a"
   hostname                  = "netology-stud"
   allow_stopping_for_update = true
@@ -13,7 +13,7 @@ resource "yandex_compute_instance" "nginx-01" {
   boot_disk {
     initialize_params {
       image_id    = data.yandex_compute_image.ubuntu-2004.id
-      name        = "nginx-01"
+      name        = "edge-01"
       type        = "network-ssd"
       size        = "10"
     }
@@ -22,7 +22,7 @@ resource "yandex_compute_instance" "nginx-01" {
   network_interface {
     subnet_id  = "${yandex_vpc_subnet.vpc-subnet-a.id}"
     nat        = true
-    ip_address = "${var.nginx_private_ip}"
+    ip_address = "${var.edge_01_private_ip}"
   }
 
   metadata = {
@@ -34,14 +34,14 @@ EOT
 
 # Depends on remote backend usage (Required local backend)
 #
-#resource "local_file" "vars_from_tf_nginx-01" {
+#resource "local_file" "vars_from_tf_edge-01" {
 #  content = <<-DOC
 #    ---
-#    nginx-01_pub_ip: "${yandex_compute_instance.nginx-01.network_interface.0.nat_ip_address}"
+#    edge-01_pub_ip: "${yandex_compute_instance.edge-01.network_interface.0.nat_ip_address}"
 #
 #    DOC
-#  filename = "../ansible/group_vars/nginx/vars_from_tf.yml"
+#  filename = "../ansible/group_vars/edge/vars_from_tf.yml"
 #  depends_on = [
-#    yandex_compute_instance.nginx-01
+#    yandex_compute_instance.edge-01
 #  ]
 #}

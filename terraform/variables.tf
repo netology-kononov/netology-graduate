@@ -6,7 +6,7 @@ variable "yandex_folder_id" {
   default = "b1gjk81mhc94gj788sq9"
 }
 
-variable "nginx_private_ip" {
+variable "edge_01_private_ip" {
   default = "192.168.1.100"
 }
 

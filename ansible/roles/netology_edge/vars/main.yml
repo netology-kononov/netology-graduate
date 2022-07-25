@@ -1,6 +1,6 @@
 ---
-# vars file for roles/netology_nginx
-nginx_packages:
+# vars file for roles/netology_edge
+edge_packages:
   - nginx
   - curl
   - pip

@@ -9,7 +9,7 @@
     extra_opts:
       - --transform
       - s/prometheus-{{ prom_ver }}.linux-amd64/prometheus/
-    remote_src: yes
+    remote_src: true
   environment: "{{ proxy_env }}"
 - name: Prom | Upload Prometheus unit-file
   become: true

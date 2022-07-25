@@ -5,33 +5,33 @@
   ansible.builtin.service:
     name: prometheus
     state: restarted
-    daemon_reload: yes
-    enabled: yes
+    daemon_reload: true
+    enabled: true
 - name: Prom | Restart Node exporter
   become: true
   ansible.builtin.service:
     name: node_exporter
     state: restarted
-    daemon_reload: yes
-    enabled: yes
+    daemon_reload: true
+    enabled: true
 - name: Prom | Restart Alert manager
   become: true
   ansible.builtin.service:
     name: alertmanager
     state: restarted
-    daemon_reload: yes
-    enabled: yes
+    daemon_reload: true
+    enabled: true
 - name: Prom | Restart MySQLd exporter
   become: true
   ansible.builtin.service:
     name: mysqld_exporter
     state: restarted
-    daemon_reload: yes
-    enabled: yes
+    daemon_reload: true
+    enabled: true
 - name: Prom | Restart Grafana
   become: true
   ansible.builtin.service:
     name: grafana-server
     state: restarted
-    daemon_reload: yes
-    enabled: yes
+    daemon_reload: true
+    enabled: true

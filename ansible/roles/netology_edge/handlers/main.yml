@@ -1,16 +1,16 @@
 ---
-# handlers file for roles/netology_nginx
-- name: NGINX | Restart NGINX
+ handlers file for roles/netology_edge
+- name: Edge | Restart NGINX
   become: true
   ansible.builtin.service:
     name: nginx
     state: restarted
-- name: NGINX | Restart Tinyproxy
+- name: Edge | Restart Tinyproxy
   become: true
   ansible.builtin.service:
     name: tinyproxy
     state: restarted
-- name: NGINX | Get SSL certificates
+- name: Edge | Get SSL certificates
   become: true
   ansible.builtin.command: acme-nginx --staging \
                           -d www.netology-stud.run.place \

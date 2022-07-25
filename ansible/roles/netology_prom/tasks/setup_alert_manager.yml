@@ -2,14 +2,14 @@
 - name: Prom | Download Alert manager archive
   become: true
   ansible.builtin.unarchive:
-    src: https://github.com/prometheus/alertmanager/releases/download/v{{ alert_ver }}/alertmanager-{{ alert_ver }}.linux-amd64.tar.gz
+    src: https://github.com/prometheus/alertmanager/releases/download/v{{ alerter_ver }}/alertmanager-{{ alerter_ver }}.linux-amd64.tar.gz
     dest: /var/lib/
     creates: /var/lib/alertmanager/
     owner: "{{ prom_owner }}"
     extra_opts:
       - --transform
-      - s/alertmanager-{{ alert_ver }}.linux-amd64/alertmanager/
-    remote_src: yes
+      - s/alertmanager-{{ alerter_ver }}.linux-amd64/alertmanager/
+    remote_src: true
   environment: "{{ proxy_env }}"
 - name: Prom | Upload Alert manager unit-file
   become: true
@@ -25,4 +25,3 @@
     dest: /etc/alertmanager.yml
     mode: 0644
   notify: Prom | Restart Alert manager
-

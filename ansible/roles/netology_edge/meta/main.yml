@@ -1,7 +1,7 @@
 ---
 galaxy_info:
   author: netology-kononov
-  description: Role for Gitlab installation in Netology graduate project
+  description: Role for Edge host installation in Netology graduate project
   company: netology-edu
 
   license: MIT

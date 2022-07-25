@@ -14,7 +14,7 @@
 - name: Prom | Install Grafana packages
   become: true
   ansible.builtin.apt:
-    update_cache: yes
+    update_cache: true
     name: "{{ item }}"
     state: present
   with_items: "{{ grafana_packages }}"

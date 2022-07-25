@@ -9,7 +9,7 @@
     extra_opts:
       - --transform
       - s/mysqld_exporter-{{ mysqld_ver }}.linux-amd64/mysqld_exporter/
-    remote_src: yes
+    remote_src: true
   environment: "{{ proxy_env }}"
 - name: Prom | Upload MySQLd exporter unit-file
   become: true
