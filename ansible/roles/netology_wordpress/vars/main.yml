@@ -12,3 +12,4 @@ wordpress_packages:
   - php-xml
   - php-xmlrpc
   - php-zip
+  - git

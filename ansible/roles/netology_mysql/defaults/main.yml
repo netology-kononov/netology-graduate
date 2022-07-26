@@ -1,8 +1,8 @@
 ---
 # defaults file for roles/netology_mysql
 role_mysql: "slave"
-server_id: "10"
-config_add_line: "read_only = 1"
+server_id: "0"
+config_add_line: ""
 commands_timeout: "5"
 replication_user: "replication_user"
 replication_user_passwd: !vault |

@@ -14,8 +14,8 @@ Role Variables
 | Variable                | Description                                                                | Default value    |
 |-------------------------|----------------------------------------------------------------------------|------------------|
 | role_mysql              | Define host`s role in the MySQL cluster. Allowed values "master", "slave". | slave            |
-| server_id               | Define MySQL host`s unique ID in cluster.                                  | 10               |
-| config_add_line         | Define MySQL host`s configuration additional options.                      | read_only = 1    |
+| server_id               | Define MySQL host`s unique ID in cluster.                                  | 0                |
+| config_add_line         | Define MySQL host`s configuration additional options.                      |                  |
 | commands_timeout        | Define timeouts (in sec) after entering MySQL console commands.            | 5                |
 | replication_user        | Define MySQL cluster replication user name.                                | replication_user |
 | replication_user_passwd | Define MySQL cluster replication user password.                            | #encrypted#      |

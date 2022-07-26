@@ -1,0 +1,3 @@
+---
+# Edge host with public IP-address
+ansible_host: 51.250.83.45

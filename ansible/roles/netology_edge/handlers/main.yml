@@ -1,5 +1,5 @@
 ---
- handlers file for roles/netology_edge
+# handlers file for roles/netology_edge
 - name: Edge | Restart NGINX
   become: true
   ansible.builtin.service:
@@ -12,7 +12,7 @@
     state: restarted
 - name: Edge | Get SSL certificates
   become: true
-  ansible.builtin.command: acme-nginx --staging \
+  ansible.builtin.command: acme-nginx \
                           -d www.netology-stud.run.place \
                           -d gitlab.netology-stud.run.place \
                           -d grafana.netology-stud.run.place \
